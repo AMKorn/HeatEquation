@@ -52,6 +52,28 @@ public class Vector {
         }
         return dotProduct;
     }
+    
+    public Vector add(Vector b) throws AlgebraException {
+        if (this.Vector.length != b.Vector.length) {
+            throw new AlgebraException("La longitud de los dos vectores es diferente");
+        }
+        double[] sum = new double[this.Vector.length];
+        for (int i = 0; i < this.Vector.length; i++) {
+            sum[i] = this.Vector[i]*b.Vector[i];
+        }
+        return new Vector(sum);
+    }
+    
+    public Vector add(Vector a, Vector b) throws AlgebraException {
+        if (a.Vector.length != b.Vector.length) {
+            throw new AlgebraException("La longitud de los dos vectores es diferente");
+        }
+        double[] sum = new double[a.Vector.length];
+        for (int i = 0; i < a.Vector.length; i++) {
+            sum[i] = a.Vector[i]*b.Vector[i];
+        }
+        return new Vector(sum);
+    }
 
     @Override
     public String toString() {

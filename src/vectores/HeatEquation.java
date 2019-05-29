@@ -11,8 +11,8 @@ package vectores;
  */
 public class HeatEquation {
     
-    private Matrix matOp = new Matrix();
-    private Vector vecOp = new Vector();
+    private Matrix mat = new Matrix();
+    private Vector vec = new Vector();
 
     public final double I = 25;
     public final double J = 50;
@@ -45,16 +45,15 @@ public class HeatEquation {
 
     public void main() {
         try {
-            double[][] a = {{1.0, 3, 5}, {2.0, 4, 7}, {1.0, 1, 0}};
-            Matrix A = new Matrix(a);
-            Matrix[] m = matOp.lu(A);
+            Matrix A = mAlpha();
+            Matrix[] m = mat.lu(A);
             Matrix mL = m[0];
             Matrix mU = m[1];
             Matrix mP = m[2];
-            System.out.println(mL +
-                    "\n \n" +
+            System.out.println("L:\n" + mL +
+                    "\n U:\n" +
                     mU +
-                    "\n \n" +
+                    "\n P:\n" +
                     mP);
         } catch (AlgebraException ae) {
             System.err.println(ae);

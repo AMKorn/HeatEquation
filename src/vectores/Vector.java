@@ -13,6 +13,10 @@ public class Vector {
 
     double[] Vector;
     int length;
+    
+    public Vector(){
+        
+    }
 
     public Vector(double[] vec) {
         Vector = vec;

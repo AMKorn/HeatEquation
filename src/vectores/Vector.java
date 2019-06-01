@@ -10,78 +10,39 @@ package vectores;
  * @author Andreas
  */
 public class Vector {
-
-    double[] Vector;
-    int length;
     
     public Vector(){
         
     }
-
-    public Vector(double[] vec) {
-        Vector = vec;
-        length = vec.length;
-    }
     
-    public double getValue(int i){
-        return Vector[i];
-    }
-    
-    public void setValue(int i, double value){
-        Vector[i] = value;
-    }
-
-    public double dotProduct(Vector b) throws AlgebraException {
-        if (this.Vector.length != b.Vector.length) {
+    public double dotProduct(double[] a, double[] b) throws AlgebraException {
+        if (a.length != b.length) {
             throw new AlgebraException("La longitud de los dos vectores es diferente");
         }
         double dotProduct = 0;
-        for (int i = 0; i < this.Vector.length; i++) {
-            dotProduct += this.Vector[i]*b.Vector[i];
+        for (int i = 0; i < a.length; i++) {
+            dotProduct += a[i]*b[i];
         }
         return dotProduct;
     }
     
-    public double dotProduct(Vector a, Vector b) throws AlgebraException {
-        if (a.Vector.length != b.Vector.length) {
+    public double[] add(double[] a, double[] b) throws AlgebraException {
+        if (a.length != b.length) {
             throw new AlgebraException("La longitud de los dos vectores es diferente");
         }
-        double dotProduct = 0;
-        for (int i = 0; i < this.Vector.length; i++) {
-            dotProduct += a.Vector[i]*b.Vector[i];
+        double[] sum = new double[a.length];
+        for (int i = 0; i < a.length; i++) {
+            sum[i] = a[i]*b[i];
         }
-        return dotProduct;
-    }
-    
-    public Vector add(Vector b) throws AlgebraException {
-        if (this.Vector.length != b.Vector.length) {
-            throw new AlgebraException("La longitud de los dos vectores es diferente");
-        }
-        double[] sum = new double[this.Vector.length];
-        for (int i = 0; i < this.Vector.length; i++) {
-            sum[i] = this.Vector[i]*b.Vector[i];
-        }
-        return new Vector(sum);
-    }
-    
-    public Vector add(Vector a, Vector b) throws AlgebraException {
-        if (a.Vector.length != b.Vector.length) {
-            throw new AlgebraException("La longitud de los dos vectores es diferente");
-        }
-        double[] sum = new double[a.Vector.length];
-        for (int i = 0; i < a.Vector.length; i++) {
-            sum[i] = a.Vector[i]*b.Vector[i];
-        }
-        return new Vector(sum);
+        return sum;
     }
 
-    @Override
-    public String toString() {
+    public String print(double[] a) {
         String s = "";
         s += "[";
-        for (int i = 0; i < Vector.length; i++) {
-            s += Vector[i];
-            if (i + 1 != Vector.length) {
+        for (int i = 0; i < a.length; i++) {
+            s += a[i];
+            if (i + 1 != a.length) {
                 s += ", ";
             }
         }

@@ -45,23 +45,26 @@ public class HeatEquation {
 
     public void main() {
         try {
-            Matrix A = mAlpha();
-            Matrix[] m = mat.lu(A);
-            Matrix mL = m[0];
-            Matrix mU = m[1];
-            Matrix mP = m[2];
-            System.out.println("L:\n" + mL +
+            double[][] A = {
+                {2,1,1},
+                {4,3,4},
+                {-2,-1,-4}
+            };
+            double[][][] m = mat.lu(A);
+            double[][] L = m[0];
+            double[][] U = m[1];
+            double[][] P = m[2];
+            System.out.println("L:\n" + mat.print(L) +
                     "\n U:\n" +
-                    mU +
+                    mat.print(U) +
                     "\n P:\n" +
-                    mP);
+                    mat.print(P));
         } catch (AlgebraException ae) {
             System.err.println(ae);
         }
     }
 
-    public Matrix mAlpha() {
-        Matrix mAlpha;
+    public double[][] mAlpha() {
 
         double[][] matrix = new double[(int) I][(int) I];
         for (int i = 0; i < I; i++) {
@@ -75,11 +78,10 @@ public class HeatEquation {
                 }
             }
         }
-        mAlpha = new Matrix(matrix);
-        return mAlpha;
+        return matrix;
     }
 
-    public Vector u0() {
+    public double[] u0() {
         double[] u = new double[(int) I];
         for (int i = 0; i < I; i++) {
             xi = i * h;
@@ -87,6 +89,6 @@ public class HeatEquation {
         }
         u[0] += alpha * l;
         u[(int) I - 1] += alpha * r;
-        return new Vector(u);
+        return u;
     }
 }

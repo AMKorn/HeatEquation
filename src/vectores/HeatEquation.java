@@ -54,14 +54,45 @@ public class HeatEquation {
             double[][] L = m[0];
             double[][] U = m[1];
             double[][] P = m[2];
-            System.out.println("L:\n" + mat.print(L) +
-                    "\n U:\n" +
-                    mat.print(U) +
-                    "\n P:\n" +
-                    mat.print(P));
+            
+            double[][] matr = {
+                {3,2,1},
+                {0,2,1},
+                {0,0,1}
+            };
+            double[] res = {6,3,1};
+            System.out.println(vec.print(solve(matr,res)));
+//            System.out.println("L:\n" + mat.print(L) +
+//                    "\n U:\n" +
+//                    mat.print(U) +
+//                    "\n P:\n" +
+//                    mat.print(P));
+//            System.out.println("\n\n\n" + mat.print(mat.extend(L, U)));
+//            System.out.println(mat.print(mAlpha()));
+//            System.out.println(vec.print(u0()));
         } catch (AlgebraException ae) {
             System.err.println(ae);
         }
+    }
+    
+    /**
+     * Resuelve A*x=b donde A es una matriz triangular n*n y b es un vector n.
+     * @param A
+     * @param b
+     * @return 
+     */
+    public double[] solve(double[][] A, double[] b) throws AlgebraException {
+        double[][] B = {b};
+        double[][] SEL = mat.extend(A,B);
+        System.out.println(mat.print(SEL));
+        double[] solution = new double[b.length];
+        for(int i = 0; i < solution.length; i++){
+             solution[i] = SEL[i][SEL.length]/SEL[i][i];
+             for(int k = i; k == 0; k--){
+                  SEL[k][SEL.length] -= SEL[k][i] * solution[i];
+             }
+        }
+        return solution;
     }
 
     public double[][] mAlpha() {

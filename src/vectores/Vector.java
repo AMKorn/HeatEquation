@@ -48,6 +48,15 @@ public class Vector {
         return a;
     }
     
+    public double[] roundVector(double[] a){
+        for(int i = 0; i < a.length; i++){
+            a[i] *= 10000;
+            a[i] = (int) a[i];
+            a[i] /= 10000;
+        }
+        return a;
+    }
+    
     public String print(double[] a) {
         String s = "";
         s += "[";

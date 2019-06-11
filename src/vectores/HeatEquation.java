@@ -47,6 +47,10 @@ public class HeatEquation {
 
     public void main() {
         try {
+            System.out.println("h: " + h);
+            System.out.println("k: " + k);
+            System.out.println("alpha: " + alpha);
+            
             vectorFrontera[0] = alpha * l;
             vectorFrontera[(int) I - 1] = alpha * r;
             double[][] A = mAlpha();
@@ -57,7 +61,13 @@ public class HeatEquation {
             double[][] P = m[2];
 
             System.out.println(mat.print(mAlpha()));
-            System.out.println(vec.print(b));
+            System.out.println(vec.print(vec.roundVector(b)));
+            
+            System.out.println("L:\n" + mat.print(mat.roundMatrix(L)) +
+                    "\n U:\n" +
+                    mat.print(mat.roundMatrix(U)) +
+                    "\n P:\n" +
+                    mat.print(mat.roundMatrix(P)));
             
             double[][] M = new double[(int) J+1][(int) I];
 
@@ -70,13 +80,9 @@ public class HeatEquation {
                 M[j] = b;
             }
             
-            System.out.println(mat.print(M));
+            System.out.println(mat.print(mat.roundMatrix(M)));
 
-//            System.out.println("L:\n" + mat.print(L) +
-//                    "\n U:\n" +
-//                    mat.print(U) +
-//                    "\n P:\n" +
-//                    mat.print(P));
+            
 //            System.out.println("\n\n\n" + mat.print(mat.extend(L, U)));
         } catch (AlgebraException ae) {
             System.err.println(ae);

@@ -119,6 +119,22 @@ public class Matrix {
         return new double[][][]{L, U, P};
     }
     
+    /**
+     * Redondea una matriz a 4 décimas.
+     * @param A
+     * @return 
+     */
+    public double[][] roundMatrix(double[][] A){
+        for(int i = 0; i < A.length; i++){
+            for(int j = 0; j < A[0].length; j++){
+                A[i][j] *= 10000;
+                A[i][j] = (int) A[i][j];
+                A[i][j] /= 10000;
+            }
+        }
+        return A;
+    }
+    
     public double[][] toMatrix(double[] a){
         double[][] A = new double[a.length][1];
         for(int i = 0; i < a.length; i++){

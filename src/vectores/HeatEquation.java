@@ -10,7 +10,7 @@ package vectores;
  * @author Andreas
  */
 public class HeatEquation {
-    
+
     private Matrix mat = new Matrix();
     private Vector vec = new Vector();
 
@@ -46,22 +46,22 @@ public class HeatEquation {
     public void main() {
         try {
             double[][] A = {
-                {2,1,1},
-                {4,3,4},
-                {-2,-1,-4}
+                {2, 1, 1},
+                {4, 3, 4},
+                {-2, -1, -4}
             };
             double[][][] m = mat.lu(A);
             double[][] L = m[0];
             double[][] U = m[1];
             double[][] P = m[2];
-            
+
             double[][] matr = {
-                {3,2,1},
-                {0,2,1},
-                {0,0,1}
+                {3, 2, 1},
+                {0, 2, 1},
+                {0, 0, 1}
             };
-            double[] res = {6,3,1};
-            System.out.println(vec.print(solve(matr,res)));
+            double[] res = {6, 3, 1};
+            System.out.println(vec.print(solve(matr, res)));
 //            System.out.println("L:\n" + mat.print(L) +
 //                    "\n U:\n" +
 //                    mat.print(U) +
@@ -74,25 +74,25 @@ public class HeatEquation {
             System.err.println(ae);
         }
     }
-    
+
     /**
      * Resuelve A*x=b donde A es una matriz triangular n*n y b es un vector n.
+     *
      * @param A
      * @param b
-     * @return 
+     * @return
      */
     public double[] solve(double[][] A, double[] b) throws AlgebraException {
-        double[][] B = {b};
-        double[][] SEL = mat.extend(A,B);
-        System.out.println(mat.print(SEL));
-        double[] solution = new double[b.length];
-        for(int i = 0; i < solution.length; i++){
-             solution[i] = SEL[i][SEL.length]/SEL[i][i];
-             for(int k = i; k == 0; k--){
-                  SEL[k][SEL.length] -= SEL[k][i] * solution[i];
-             }
+        int n = b.length;
+        double[] x = new double[n];
+        for (int i = n - 1; i >= 0; i--) {
+            double sum = 0.0;
+            for (int j = i + 1; j < n; j++) {
+                sum += A[i][j] * x[j];
+            }
+            x[i] = (b[i] - sum) / A[i][i];
         }
-        return solution;
+        return x;
     }
 
     public double[][] mAlpha() {

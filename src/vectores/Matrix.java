@@ -36,11 +36,16 @@ public class Matrix {
         return result;
     }
 
+    public double[][] extend(double[][] A, double[] b) throws AlgebraException {
+        double[][] B = toMatrix(b);
+        return extend(A, B);
+    }
+    
     public double[][] extend(double[][] A, double[][] B) throws AlgebraException {
-        if (A[0].length != B[0].length) {
+        if (A.length != B.length) {
             throw new AlgebraException("Las matrices no tienen el mismo numero de filas");
         }
-        double[][] C = new double[A[0].length][A.length + B.length];
+        double[][] C = new double[A.length][A[0].length + B[0].length];
         for (int i = 0; i < A.length; i++) {
             for (int j = 0; j < A[0].length; j++) {
                 C[i][j] = A[i][j];
@@ -49,7 +54,6 @@ public class Matrix {
         for (int i = 0; i < C.length; i++) {
             for (int j = A[0].length; j < C[0].length; j++) {
                 C[i][j] = B[i][j - A[0].length];
-                System.out.println(print(C) + "\n");
             }
         }
         return C;
@@ -108,6 +112,14 @@ public class Matrix {
             }
         }
         return new double[][][]{L, U, P};
+    }
+    
+    private double[][] toMatrix(double[] a){
+        double[][] A = new double[a.length][1];
+        for(int i = 0; i < a.length; i++){
+            A[i][0] = a[i];
+        }
+        return A;
     }
 
     public String print(double[][] a) {

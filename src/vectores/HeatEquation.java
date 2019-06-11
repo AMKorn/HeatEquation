@@ -30,6 +30,8 @@ public class HeatEquation {
     public double l = 0.25;
     public double r = 0.25;
 
+    public double[] vectorFrontera = new double[(int) I];
+
     public double f(double x) {
         double f;
         f = x;
@@ -45,31 +47,37 @@ public class HeatEquation {
 
     public void main() {
         try {
-            double[][] A = {
-                {2, 1, 1},
-                {4, 3, 4},
-                {-2, -1, -4}
-            };
+            vectorFrontera[0] = alpha * l;
+            vectorFrontera[(int) I - 1] = alpha * r;
+            double[][] A = mAlpha();
+            double[] b = u0();
             double[][][] m = mat.lu(A);
             double[][] L = m[0];
             double[][] U = m[1];
             double[][] P = m[2];
 
-            double[][] matr = {
-                {3, 2, 1},
-                {0, 2, 1},
-                {0, 0, 1}
-            };
-            double[] res = {6, 3, 1};
-            System.out.println(vec.print(solve(matr, res)));
+            System.out.println(mat.print(mAlpha()));
+            System.out.println(vec.print(b));
+            
+            double[][] M = new double[(int) J+1][(int) I];
+
+            for (int j = 0; j <= J; j++) {
+                double[] aux = vec.toVector(mat.matrixMul(P, b));
+                double[] auxSol = solve(L, aux);
+                b = solve(U, auxSol);
+                b = vec.add(b, vectorFrontera);
+                System.out.println(j +": " + vec.print(b));
+                M[j] = b;
+            }
+            
+            System.out.println(mat.print(M));
+
 //            System.out.println("L:\n" + mat.print(L) +
 //                    "\n U:\n" +
 //                    mat.print(U) +
 //                    "\n P:\n" +
 //                    mat.print(P));
 //            System.out.println("\n\n\n" + mat.print(mat.extend(L, U)));
-//            System.out.println(mat.print(mAlpha()));
-//            System.out.println(vec.print(u0()));
         } catch (AlgebraException ae) {
             System.err.println(ae);
         }
@@ -113,13 +121,17 @@ public class HeatEquation {
     }
 
     public double[] u0() {
-        double[] u = new double[(int) I];
-        for (int i = 0; i < I; i++) {
-            xi = i * h;
-            u[i] = f(xi);
+        try {
+            double[] u = new double[(int) I];
+            for (int i = 0; i < I; i++) {
+                xi = i * h;
+                u[i] = f(xi);
+            }
+            u = vec.add(u, vectorFrontera);
+            return u;
+        } catch (AlgebraException ae) {
+            System.err.println("Fatal Exception on initial vector: " + ae);
+            return null;
         }
-        u[0] += alpha * l;
-        u[(int) I - 1] += alpha * r;
-        return u;
     }
 }

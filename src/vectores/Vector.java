@@ -32,11 +32,22 @@ public class Vector {
         }
         double[] sum = new double[a.length];
         for (int i = 0; i < a.length; i++) {
-            sum[i] = a[i]*b[i];
+            sum[i] = a[i]+b[i];
         }
         return sum;
     }
 
+    public double[] toVector(double[][] A) throws AlgebraException {
+        if(A[0].length != 1){
+            throw new AlgebraException("No se puede convertir una matriz bidimensional en un vector.");
+        }
+        double[] a = new double[A.length];
+        for(int i = 0; i < a.length; i++){
+            a[i] = A[i][0];
+        }
+        return a;
+    }
+    
     public String print(double[] a) {
         String s = "";
         s += "[";

@@ -19,6 +19,11 @@ public class Matrix {
 
     }
 
+    public double[][] matrixMul(double[][] A, double[] b) throws AlgebraException {
+        double[][] B = toMatrix(b);
+        return matrixMul(A, B);
+    }
+    
     public double[][] matrixMul(double[][] A, double[][] B) throws AlgebraException {
         double[][] result = new double[A.length][B[0].length];
         double[] aux = new double[B.length];
@@ -114,7 +119,7 @@ public class Matrix {
         return new double[][][]{L, U, P};
     }
     
-    private double[][] toMatrix(double[] a){
+    public double[][] toMatrix(double[] a){
         double[][] A = new double[a.length][1];
         for(int i = 0; i < a.length; i++){
             A[i][0] = a[i];
